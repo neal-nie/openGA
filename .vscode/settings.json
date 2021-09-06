@@ -1,0 +1,8 @@
+{
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "restructuredtext.languageServer.disabled": true,
+    "python.envFile": "${workspaceFolder}/venv",
+    "restructuredtext.syntaxHighlighting.disabled": true,
+    // "python.defaultInterpreterPath": "python"
+}
