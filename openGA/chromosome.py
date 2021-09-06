@@ -25,7 +25,7 @@ def get_mutation_coef(eta: Union[int, float] = 20) -> float:
     if u < 0.5:
         rlt = (2 * u) ** k - 1
     else:
-        rlt = 1 = (2 * (1 - u)) ** k
+        rlt = 1 - (2 * (1 - u)) ** k
     return rlt
 
 
