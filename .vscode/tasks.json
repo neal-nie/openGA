@@ -1,0 +1,116 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Venv",
+            "detail": "create virtual environment",
+            "type": "shell",
+            "command": "virtualenv",
+            "args": [
+                ".venv"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "test",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build",
+            "detail": "build work space, generate package",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "setup.py",
+                "sdist",
+                "bdist_wheel"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean-Bash",
+            "detail": "clean legacy build generated files",
+            "type": "shell",
+            "command": "rm",
+            "args": [
+                "-rf",
+                "*egg-info",
+                "build",
+                "*.avi"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                // solve cmd not recognize rm error
+                // bash path need to add into PATH
+                "shell": {
+                    "executable": "bash.exe",
+                    "args": [
+                        "-c",
+                        "-l"
+                    ]
+                }
+            },
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Re-Build",
+            "detail": "clean legacy build and build new package",
+            "dependsOn": [
+                "Clean-Cmd",
+                "Build"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        },
+        {
+            "label": "Add Path",
+            "detail": "Add path of work space into .venv",
+            "type": "shell",
+            "command": [
+                ".script\\add_pth.bat",
+            ],
+            "args": [
+                "${workspaceFolder}",
+                "${workspaceFolder}\\${input:packagePath}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "test",
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean-Cmd",
+            "detail": "clean legacy build generated files",
+            "type": "shell",
+            "command": ".script\\remove.bat",
+            "args": [
+                "*egg-info",
+                "build",
+                "*.avi"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "packagePath",
+            "type": "promptString",
+            "description": "rel. path of site-package in virtual environment",
+            "default": ".venv\\Lib\\site-packages"
+        }
+    ]
+}
