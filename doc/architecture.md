@@ -43,6 +43,7 @@
         Individual[] curr_gen
         Individual[] children
         Individual[] next_gen
+        --public--
         Individual[] compete(int pool_size, int tour_size)
         Individual[] reproduce()
         Individual[] elmiate()
