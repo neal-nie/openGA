@@ -1,10 +1,9 @@
 """
 openGA
 """
+# Copyright (c) 2015-2021 Neal Nie. All rights reserved.
 
 from pathlib import Path
-
-from numpy import get_include
 from setuptools import find_packages, setup
 
 PROJECT_PATH = Path(__file__).parent

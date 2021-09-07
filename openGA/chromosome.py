@@ -1,6 +1,8 @@
 """
 chromosome for genetic algorithm
 """
+# Copyright (c) 2015-2021 Neal Nie. All rights reserved.
+
 import logging
 import numpy as np
 from typing import Union, List, Tuple
