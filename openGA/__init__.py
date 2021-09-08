@@ -2,6 +2,8 @@
 """
 openGA is open source genetic algorithm framework
 """
+# Copyright (c) 2015-2021 Neal Nie. All rights reserved.
+
 from .version import __version__
 import logging
 
