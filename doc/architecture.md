@@ -1,6 +1,6 @@
 # Arichecture of openGA
 
-<p align="right">by Nie Guangze</p>
+<p align="right">by Neal Nie</p>
 
 ## Class
 

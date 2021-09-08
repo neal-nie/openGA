@@ -42,7 +42,7 @@ setup(
     url="https://github.com/neal-nie/openGA",
     # Author details
     author="Neal Nie",
-    author_email="guangze.nie@outlook.com",
+    author_email="neal-nie@outlook.com",
     # Choose your license
     license="LGPLv3+",
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
