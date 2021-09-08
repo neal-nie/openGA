@@ -60,4 +60,34 @@
 
 ## Framework
 
-`ToDo`
+```puml
+@startuml
+Start
+:init. Chromosomes;
+->get gene of init population(individuals);
+:express chromosomes;
+->get trait of init population(individuals);
+Partition “for each individual” {
+    :evaluate fitness;
+}
+->get init population(chromosomes with fitness);
+Partition “for each generation” {
+    Partition “parents selection” {
+        :compete;
+    }
+    ->get parents(chromosomes with fitness);
+    Partition “reproduce offspring” {
+        :crossover;
+        :mutate;
+        :evaluate fitness;
+    }
+    -> get children(chromosome with fitness);
+    Partition “natural elimination” {
+        :combine parents and children;
+        :select next generation population;
+    }
+}
+->next generation population;
+Stop
+@enduml
+```
