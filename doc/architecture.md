@@ -26,9 +26,11 @@
         int idv_id
         float fittness
         Chromosome plasm
-        --patch--
-        express()
+        ==**patch**==
+        --public--
         evaluate()
+        --private--
+        express()
     }
     @enduml
     ```
@@ -41,16 +43,17 @@
         int gen_id
         int size
         Individual[] curr_gen
+        Individual[] parents
         Individual[] children
         Individual[] next_gen
         --public--
-        Individual[] compete(int pool_size, int tour_size)
-        Individual[] reproduce()
-        Individual[] elmiate()
+        select()
+        reproduce()
+        elmiate()
         --private--
-        individual[] combine()
-        individual[] select()
         evaluate()
+        compete(int pool_size, int tour_size)
+        combine()
     }
     @enduml
     ```

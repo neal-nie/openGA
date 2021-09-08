@@ -19,12 +19,21 @@ class Individual(object):
         self._check = check
         self._gen_id = gen_id
         self._idv_id = idv_id
-        self._fittness = 0
+        self._fittness = None
         self._plasm = Chromosome(gene_names, self._check)
 
     @property
+    def fittness(self):
+        if self._fittness is None:
+            raise ValueError('fittness not available, need evaluate in prior.')
+        return self._fittness
+    
+    def is_growup(self):
+        return not self._fittness is None
+
+    @property
     def plasm(self):
-        return self._plasm
+        return self._plasm.copy()
 
     @plasm.setter
     def plasm(self, info: Chromosome):
@@ -34,7 +43,7 @@ class Individual(object):
         for i in range(self._plasm._gene_num):
             self._plasm._update(info.gene_values[i], i)
 
-    def express(self):
+    def _express(self):
         raise NotImplementedError(
             'express() of Individual need to implement by monkey patch')
 
