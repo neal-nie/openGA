@@ -92,3 +92,9 @@ class Chromosome(object):
             c_gene_val = limit(p_gene_val + theta)
             offspring._update(c_gene_val, i)
         return offspring
+
+    def copy(self):
+        twin = Chromosome(self._gene_names, self._check)
+        for i in range(self._gene_num):
+            twin._update(self._gene_values[i], i)
+        return twin

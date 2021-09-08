@@ -41,3 +41,9 @@ class Individual(object):
     def evaluate(self):
         raise NotImplementedError(
             'evaluate() of Individual need to implement by monkey patch')
+
+    def copy(self):
+        twin = Individual(self._gen_id, self._idv_id, self._plasm._gene_names, self._check)
+        for i in range(self._plasm._gene_num):
+            twin._plasm._update(self._plasm.gene_values[i], i)
+        return twin
