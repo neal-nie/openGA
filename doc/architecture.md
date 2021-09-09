@@ -47,13 +47,13 @@
         Individual[] children
         Individual[] next_gen
         --public--
-        select()
-        reproduce()
-        elmiate()
+        select() -> parents
+        reproduce() -> children
+        elmiate() -> next generation
         --private--
-        evaluate()
-        compete(int pool_size, int tour_size)
-        combine()
+        evaluate() -> update fittness
+        compete() -> return winner idv_id
+        combine() -> 
     }
     @enduml
     ```
