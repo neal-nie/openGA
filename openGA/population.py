@@ -9,7 +9,7 @@ from typing import List
 from .individual import Individual
 
 logger = logging.getLogger('openGA')
-
+CHILD_ID_OFFSET = 1000
 
 class Population(object):
     """
@@ -56,7 +56,8 @@ class Population(object):
     def select(self, pool_size: int = None, tour_size: int = 2):
         if pool_size is None:
             pool_size = int(self._size/2)
-
+        # evaluate parents
+        self._evaluate(self._curr_gen)
         parents_idx_list = []
         for _ in range(pool_size):
             # select candidates
@@ -78,3 +79,28 @@ class Population(object):
         self._parents = []
         for i in parents_idx_list:
             self._parents.append(self._curr_gen[i])
+
+    def reproduce(self, cross_prob: float = 0.9):
+        if not 0 <= cross_prob <= 1:
+            raise ValueError(
+                'invalid cross_prob. Must in [0,1], got %6.4f' % cross_prob)
+
+        self._children = []
+        n_parents = len(self._parents)
+        for i in range(n_parents):
+            if np.random.uniform(0, 1) < cross_prob:
+                # select parents
+                p0_idx = np.random.randint(0, n_parents)
+                p1_idx = p0_idx
+                while p1_idx == p0_idx:
+                    p1_idx = np.random.randint(0, n_parents)
+                
+                # sexual produce
+                c0, c1 = self._parents[p0_idx].sexual_reproduce(self._parents[p1_idx])
+                c0.idv_id = CHILD_ID_OFFSET + i
+                c1.idv_id = CHILD_ID_OFFSET + i + 1
+                self._children.append(c0)
+                self._children.append(c1)
+        # evaluate children
+        self._evaluate(self._children)
+

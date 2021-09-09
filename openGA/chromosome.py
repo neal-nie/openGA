@@ -55,7 +55,7 @@ class Chromosome(object):
             value_set = value
         self._gene_values[index] = value_set
 
-    def is_couple(self, couple: Chromosome):
+    def is_couple(self, couple: Chromosome) -> bool:
         if self._gene_num != couple._gene_num:
             logger.info('Not couple for unbalance gene number')
             return False
@@ -93,7 +93,7 @@ class Chromosome(object):
             offspring._update(c_gene_val, i)
         return offspring
 
-    def copy(self):
+    def copy(self) -> Chromosome:
         twin = Chromosome(self._gene_names, self._check)
         for i in range(self._gene_num):
             twin._update(self._gene_values[i], i)

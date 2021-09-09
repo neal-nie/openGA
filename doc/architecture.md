@@ -52,7 +52,7 @@
         elmiate() -> next generation
         --private--
         evaluate() -> update fittness
-        compete() -> return winner idv_id
+        <s>compete() -> return winner idv_id</s>
         combine() -> 
     }
     @enduml
