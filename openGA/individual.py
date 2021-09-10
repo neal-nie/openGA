@@ -24,6 +24,14 @@ class Individual(object):
         self._plasm = Chromosome(gene_names, self._check)
 
     @property
+    def gen_id(self):
+        return self._gen_id
+
+    @gen_id.setter
+    def gen_id(self, gen:int):
+        self._gen_id = gen
+
+    @property
     def idv_id(self):
         return self._idv_id
 
