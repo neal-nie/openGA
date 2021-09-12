@@ -4,6 +4,27 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Unit-Test",
+            "detail": "do unit test for current file",
+            "type": "process",
+            "command": "python",
+            "args": [
+                "${relativeFile}",
+                "-v",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "PYTHONPATH": "${workspaceFolder};${env:PYTHONPATH}"
+                }
+            },
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Venv",
             "detail": "create virtual environment",
             "type": "shell",
@@ -73,8 +94,8 @@
             "problemMatcher": []
         },
         {
-            "label": "Add Path",
-            "detail": "Add path of work space into .venv",
+            "label": "Add-Path",
+            "detail": "Add path of source into side-packages of .venv",
             "type": "shell",
             "command": [
                 ".script\\add_pth.bat",
