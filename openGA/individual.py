@@ -3,6 +3,7 @@ individual for genetic algorithm
 """
 # Copyright (c) 2015-2021 Neal Nie. All rights reserved.
 
+from __future__ import annotations
 import logging
 import numpy as np
 from typing import List, Tuple, Union
@@ -76,7 +77,7 @@ class Individual(object):
             twin._plasm._update(self._plasm.gene_values[i], i)
         return twin
 
-    def sexual_reproduce(self, couple: Individual, p_mutation: float = 0.05) -> Tuple(Individual, Individual):
+    def sexual_reproduce(self, couple: Individual, p_mutation: float = 0.05) -> Tuple[Individual, Individual]:
         offspring_0 = self.copy()
         offspring_1 = couple.copy()
         plasm_0, plasm_1 = self.plasm.crossover(couple.plasm)
