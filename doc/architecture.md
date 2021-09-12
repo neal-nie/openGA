@@ -47,13 +47,13 @@
         Individual[] children
         Individual[] next_gen
         --public--
-        select()
-        reproduce()
-        elmiate()
+        select() -> parents
+        reproduce() -> children
+        elmiate() -> next generation
         --private--
-        evaluate()
-        compete(int pool_size, int tour_size)
-        combine()
+        evaluate() -> update fittness
+        <s>compete() -> return winner idv_id</s>
+        <s>combine() -> </s>
     }
     @enduml
     ```
@@ -91,3 +91,19 @@ Partition “for each generation” {
 Stop
 @enduml
 ```
+
+## Draft
+
+p_idx|c_idx|
+--|--|
+0|0
+0|1
+1|2
+1|3
+2|4
+2|5
+3|6
+3|7
+...|...
+n|2*n
+n|2*n + 1
