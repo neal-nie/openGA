@@ -97,8 +97,8 @@ class Population(object):
                     p1_idx = np.random.randint(0, n_parents)
 
                 # sexual produce
-                c0, c1 = self._parents[p0_idx].sexual_reproduce(
-                    self._parents[p1_idx])
+                c0, c1 = self._parents[int(p0_idx)].sexual_reproduce(
+                    self._parents[int(p1_idx)])
                 c0.idv_id = self._size + 2*i
                 c1.idv_id = self._size + 2*i + 1
                 self._children.append(c0)
@@ -119,7 +119,7 @@ class Population(object):
         combine_sort_idx, _ = zip(*joint_sort)
         # get the top size
         for i in range(self._size):
-            next_idv = self._combine[combine_idx_list[i]]
+            next_idv = self._combine[combine_sort_idx[i]]
             next_idv.idv_id = i
             next_idv.gen_id = self._gen_id + 1
             self._next_gen.append(next_idv)
