@@ -7,7 +7,7 @@ from __future__ import annotations
 import logging
 import numpy as np
 from typing import Union, List, Tuple
-from .utils import limit
+from .utils import limit, GENE_MIN, GENE_MAX
 
 logger = logging.getLogger('openGA')
 
@@ -44,11 +44,19 @@ class Chromosome(object):
         self._gene_values = np.zeros(self._gene_num)
 
     @property
+    def check(self):
+        return self._check
+
+    @check.setter
+    def check(self, active: bool):
+        self._check = active
+
+    @property
     def gene_values(self):
         return self._gene_values.copy()
 
     def _update(self, value: float, index: int):
-        if not 0 <= value <= 1 and self._check:
+        if not GENE_MIN <= value <= GENE_MAX and self._check:
             value_set = limit(value)
             logger.warning(
                 'get out of boundary value [%6.4f], limit to [%6.4f]' % (value, value_set))
@@ -66,6 +74,10 @@ class Chromosome(object):
                     i, self._gene_names[i], couple._gene_names[i]))
                 return False
         return True
+
+    def random(self) -> None:
+        for i in range(self._gene_num):
+            self._update(np.random.uniform(GENE_MIN, GENE_MAX), i)
 
     def crossover(self, couple: Chromosome, eta: Union[int, float] = 20) -> Tuple[Chromosome, Chromosome]:
         if self._check:
