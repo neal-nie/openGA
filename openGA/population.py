@@ -3,6 +3,7 @@ population for genetic algorithm
 """
 # Copyright (c) 2015-2021 Neal Nie. All rights reserved.
 
+from __future__ import annotations
 import logging
 import numpy as np
 from typing import List
@@ -16,7 +17,7 @@ class Population(object):
     population contain current generation(includes adults, children) and next generateion
     """
 
-    def __init__(self, gen_id: int, size: int, curr_gen: List[Individual]) -> None:
+    def __init__(self, gen_id: int, size: int, curr_gen: List[Individual]) -> Population:
         self._gen_id = gen_id
         self._size = size
         self._curr_gen = curr_gen.copy()
@@ -49,16 +50,17 @@ class Population(object):
         return self._next_gen.copy()
 
     @staticmethod
-    def _evaluate(group: List[Individual]):
+    def evaluate(group: List[Individual]):
         for persone in group:
             if not persone.is_growup():
+                persone.express()
                 persone.evaluate()
 
     def select(self, pool_size: int = None, tour_size: int = 2) -> List[Individual]:
         if pool_size is None:
             pool_size = int(self._size/2)
         # evaluate parents
-        self._evaluate(self._curr_gen)
+        self.evaluate(self._curr_gen)
         parents_idx_list = []
         for _ in range(pool_size):
             # select candidates
@@ -85,7 +87,6 @@ class Population(object):
         if not 0 <= cross_prob <= 1:
             raise ValueError(
                 'invalid cross_prob. Must in [0,1], got %6.4f' % cross_prob)
-
         self._children = []
         n_parents = len(self._parents)
         for i in range(n_parents):
@@ -95,7 +96,6 @@ class Population(object):
                 p1_idx = p0_idx
                 while p1_idx == p0_idx:
                     p1_idx = np.random.randint(0, n_parents)
-
                 # sexual produce
                 c0, c1 = self._parents[int(p0_idx)].sexual_reproduce(
                     self._parents[int(p1_idx)])
@@ -104,8 +104,7 @@ class Population(object):
                 self._children.append(c0)
                 self._children.append(c1)
         # evaluate children
-        self._evaluate(self._children)
-
+        self.evaluate(self._children)
         return self._children
 
     def eliminate(self) -> List[Individual]:
@@ -123,7 +122,6 @@ class Population(object):
             next_idv.idv_id = i
             next_idv.gen_id = self._gen_id + 1
             self._next_gen.append(next_idv)
-
         return self._next_gen
 
     def evolve(self, pool_size: int = None, tour_size: int = 2, cross_prob: float = 0.9) -> List[Individual]:

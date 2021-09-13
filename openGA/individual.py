@@ -17,19 +17,19 @@ class Individual(object):
     individual carray chromosomes, express feature and show fittness.
     """
 
-    def __init__(self, gen_id: int, idv_id: int, gene_names: List[str], check: bool = True) -> None:
-        self._check = check
+    def __init__(self, gen_id: int, idv_id: int, plasm: Chromosome) -> Individual:
         self._gen_id = gen_id
         self._idv_id = idv_id
         self._fittness = None
-        self._plasm = Chromosome(gene_names, self._check)
+        self._plasm = plasm.copy()
+        self._check = self._plasm.check
 
     @property
     def gen_id(self):
         return self._gen_id
 
     @gen_id.setter
-    def gen_id(self, gen:int):
+    def gen_id(self, gen: int):
         self._gen_id = gen
 
     @property
@@ -60,9 +60,9 @@ class Individual(object):
                 raise ValueError(
                     'can not extract info for mismatch chromosome')
         for i in range(self._plasm._gene_num):
-            self._plasm._update(info.gene_values[i], i)
+            self._plasm.update(info.gene_values[i], i)
 
-    def _express(self):
+    def express(self):
         raise NotImplementedError(
             'express() of Individual need to implement by monkey patch')
 
@@ -72,23 +72,27 @@ class Individual(object):
 
     def copy(self) -> Individual:
         twin = Individual(self._gen_id, self._idv_id,
-                          self._plasm._gene_names, self._check)
+                          self._plasm)
         for i in range(self._plasm._gene_num):
-            twin._plasm._update(self._plasm.gene_values[i], i)
+            twin._plasm.update(self._plasm.gene_values[i], i)
         return twin
 
     def sexual_reproduce(self, couple: Individual, p_mutation: float = 0.05) -> Tuple[Individual, Individual]:
         offspring_0 = self.copy()
         offspring_1 = couple.copy()
-        plasm_0, plasm_1 = self.plasm.crossover(couple.plasm)
-        
+        plasm_0, plasm_1 = self._plasm.crossover(couple._plasm)
         if np.random.uniform() < p_mutation:
             plasm_0 = plasm_0.mutate()
         if np.random.uniform() < p_mutation:
             plasm_1 = plasm_1.mutate()
-        
         offspring_0.plasm = plasm_0
         offspring_1.plasm = plasm_1
 
         return offspring_0, offspring_1
 
+    def asexual_reproduce(self, p_mutation: float = 0.01) -> Individual:
+        offspring = self.copy()
+        if np.random.uniform() < p_mutation:
+            plasm = self._plasm.mutate()
+        offspring.plasm = plasm
+        return offspring
