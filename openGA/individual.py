@@ -24,6 +24,12 @@ class Individual(object):
         self._plasm = plasm.copy()
         self._check = self._plasm.check
 
+    def __str__(self) -> str:
+        return f"person({self._gen_id:d}, {self._idv_id:d}): {self._plasm}"
+    
+    def __format__(self, format_spec: str) -> str:
+        return str(self)
+
     @property
     def gen_id(self):
         return self._gen_id
@@ -90,9 +96,9 @@ class Individual(object):
 
         return offspring_0, offspring_1
 
-    def asexual_reproduce(self, p_mutation: float = 0.01) -> Individual:
+    def asexual_reproduce(self, p_mutation: float = 0.1) -> Individual:
         offspring = self.copy()
         if np.random.uniform() < p_mutation:
             plasm = self._plasm.mutate()
-        offspring.plasm = plasm
+            offspring.plasm = plasm
         return offspring

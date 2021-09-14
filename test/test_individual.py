@@ -57,6 +57,7 @@ class TestIndividual(unittest.TestCase):
         self.assertEqual(person_clone.idv_id, self.idv_0.idv_id)
         self.assertEqual(person_clone._check, self.idv_0._check)
         self.assertEqual(person_clone.plasm, self.idv_0.plasm)
+        self.assertFalse(person_clone is self.idv_0)
 
     def test_express(self):
         with self.assertRaises(NotImplementedError):
@@ -66,9 +67,35 @@ class TestIndividual(unittest.TestCase):
         self.assertEqual(self.idv_1.fittness, 2)
 
     def test_evaluate(self):
+        with self.assertRaises(NotImplementedError):
+            self.idv_0.evaluate()
         Individual.evaluate = evaluate
         self.idv_0.evaluate(4)
         self.assertEqual(self.idv_0.fittness, 4)
+
+    def test_str_format(self):
+        print('\n%s' % self.idv_0)
+        print(self.idv_1)
+
+    def test_fittness(self):
+        with self.assertRaises(ValueError):
+            self.idv_0.fittness
+        self.assertIs(self.idv_1._fittness, None)
+
+    def test_sexual_reproduce(self):
+        print(f'\nfather: {self.idv_0}')
+        print(f'mother: {self.idv_1}')
+        son, daughter = self.idv_1.sexual_reproduce(self.idv_0)
+        print(f'son: {son}')
+        print(f'daughter: {daughter}')
+        print(f'father: {self.idv_0}')
+        print(f'mother: {self.idv_1}')
+
+    def test_asexual_reproduce(self):
+        print(f'\nparent: {self.idv_0}')
+        offspring = self.idv_0.asexual_reproduce(.9)
+        print(f'offspring: {offspring}')
+        print(f'parent: {self.idv_0}')
 
 
 if __name__ == "__main__":
