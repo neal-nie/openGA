@@ -134,6 +134,7 @@ class TestPopulation(unittest.TestCase):
         Individual.express = express
         Individual.evaluate = evaluate
         next_generation = self.people_test.evolve()
+        del self.people_test
         print('next generation:')
         for p in next_generation:
             print(p)

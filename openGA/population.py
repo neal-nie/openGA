@@ -107,7 +107,7 @@ class Population(object):
         self._parents = []
         for i in parents_idx_list:
             self._parents.append(self._curr_gen[i])
-        return self._parents
+        return self._parents.copy()
 
     def reproduce(self, cross_prob: float = 0.9) -> List[Individual]:
         if not 0 <= cross_prob <= 1:
@@ -135,7 +135,7 @@ class Population(object):
                 self.append_newborn(c)
         # evaluate children
         self.evaluate(self._children)
-        return self._children
+        return self._children.copy()
 
     def eliminate(self) -> List[Individual]:
         self._combine = self._curr_gen.copy()
@@ -152,9 +152,9 @@ class Population(object):
             next_idv.idv_id = i
             next_idv.gen_id = self._gen_id + 1
             self._next_gen.append(next_idv)
-        return self._next_gen
+        return self._next_gen.copy()
 
     def evolve(self, pool_size: int = None, tour_size: int = 2, cross_prob: float = 0.9) -> List[Individual]:
         self.select(pool_size, tour_size)
         self.reproduce(cross_prob)
-        return self.eliminate()
+        return self.eliminate().copy()
