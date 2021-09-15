@@ -14,24 +14,32 @@ logger = logging.getLogger('openGA')
 GENE_PRECISION = 4
 
 
+def dist_crossover(r: float, eta: Union[int, float] = 20) -> float:
+    k = 1 / (eta + 1)
+    if r <= 0.5:
+        rlt = (2 * r) ** k
+    else:
+        rlt = (2 * (1 - r)) ** -k
+    return rlt
+
+
+def dist_mutation(r: float, eta: Union[int, float] = 20) -> float:
+    k = 1 / (eta + 1)
+    if r < 0.5:
+        rlt = (2 * r) ** k - 1
+    else:
+        rlt = 1 - (2 * (1 - r)) ** k
+    return rlt
+
+
 def get_crossover_coef(eta: Union[int, float] = 20) -> float:
     u = np.random.uniform()
-    k = 1 / (eta + 1)
-    if u <= 0.5:
-        rlt = (2 * u) ** k
-    else:
-        rlt = (2 * (1 - u)) ** -k
-    return rlt
+    return dist_crossover(u, eta)
 
 
 def get_mutation_coef(eta: Union[int, float] = 20) -> float:
     u = np.random.uniform()
-    k = 1 / (eta + 1)
-    if u < 0.5:
-        rlt = (2 * u) ** k - 1
-    else:
-        rlt = 1 - (2 * (1 - u)) ** k
-    return rlt
+    return dist_mutation(u, eta)
 
 
 class Chromosome(object):

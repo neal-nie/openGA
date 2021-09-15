@@ -17,13 +17,21 @@ class Population(object):
     population contain current generation(includes adults, children) and next generateion
     """
 
-    def __init__(self, gen_id: int, size: int, curr_gen: List[Individual]) -> Population:
+    def __init__(self, gen_id: int, curr_gen: List[Individual], capacity: int = 20) -> Population:
+        self._capacity = capacity
         self._gen_id = gen_id
-        self._size = size
+        self._size = len(curr_gen)
         self._curr_gen = curr_gen.copy()
         self._parents = []
         self._children = []
         self._next_gen = []
+        for i in range(self._size):
+            self._curr_gen[i].gen_id = gen_id
+            self._curr_gen[i].idv_id = i
+
+    @property
+    def gen_id(self):
+        return self._gen_id
 
     @property
     def curr_gen(self):
@@ -51,10 +59,27 @@ class Population(object):
 
     @staticmethod
     def evaluate(group: List[Individual]):
-        for persone in group:
-            if not persone.is_growup():
-                persone.express()
-                persone.evaluate()
+        for person in group:
+            if not person.is_growup():
+                person.express()
+                person.evaluate()
+
+    def size(self):
+        return self._size
+
+    def append_newcomer(self, newcomer: Individual):
+        person = newcomer.copy()
+        person.gen_id = self._gen_id
+        person.idv_id = self._size
+        self._curr_gen.append(person)
+        self._size += 1
+
+    def append_newborn(self, newborn: Individual):
+        person = newborn.copy()
+        person.gen_id = self._gen_id
+        person.idv_id = self._size
+        self._children.append(person)
+        self._size += 1
 
     def select(self, pool_size: int = None, tour_size: int = 2) -> List[Individual]:
         if pool_size is None:
@@ -76,12 +101,13 @@ class Population(object):
                 if parent_idx is None:
                     parent_idx = candidate_idx
                     continue
-                if self._curr_gen[parent_idx].fittness < self._curr_gen[candidate_idx]:
+                if self._curr_gen[parent_idx].fitness < self._curr_gen[candidate_idx].fitness:
                     parent_idx = candidate_idx
             parents_idx_list.append(parent_idx)
         self._parents = []
         for i in parents_idx_list:
             self._parents.append(self._curr_gen[i])
+        return self._parents
 
     def reproduce(self, cross_prob: float = 0.9) -> List[Individual]:
         if not 0 <= cross_prob <= 1:
@@ -98,11 +124,15 @@ class Population(object):
                     p1_idx = np.random.randint(0, n_parents)
                 # sexual produce
                 c0, c1 = self._parents[int(p0_idx)].sexual_reproduce(
-                    self._parents[int(p1_idx)])
-                c0.idv_id = self._size + 2*i
-                c1.idv_id = self._size + 2*i + 1
-                self._children.append(c0)
-                self._children.append(c1)
+                    self._parents[int(p1_idx)], p_mutation=0)
+                self.append_newborn(c0)
+                self.append_newborn(c1)
+            else:
+                # asexual produce mutation
+                p_idx = np.random.randint(0, n_parents)
+                c = self._parents[int(p_idx)].asexual_reproduce(p_mutation=1)
+                c.idv_id = len(self._children) + self._size
+                self.append_newborn(c)
         # evaluate children
         self.evaluate(self._children)
         return self._children
@@ -110,15 +140,15 @@ class Population(object):
     def eliminate(self) -> List[Individual]:
         self._combine = self._curr_gen.copy()
         self._combine.extend(self._children)
-        combine_fit_list = [idv for idv in self._combine]
+        combine_fit_list = [idv.fitness for idv in self._combine]
         combine_idx_list = list(range(len(self._combine)))
         joint_raw = zip(combine_fit_list, combine_idx_list)
-        # sort individual on fittness from high to low
+        # sort individual on fitness from high to low
         joint_sort = sorted(joint_raw, reverse=True)
-        combine_sort_idx, _ = zip(*joint_sort)
         # get the top size
-        for i in range(self._size):
-            next_idv = self._combine[combine_sort_idx[i]]
+        self._next_gen = []
+        for i in range(self._capacity):
+            next_idv = self._combine[joint_sort[i][1]]
             next_idv.idv_id = i
             next_idv.gen_id = self._gen_id + 1
             self._next_gen.append(next_idv)

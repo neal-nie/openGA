@@ -10,11 +10,11 @@ from openGA import Individual, Chromosome
 
 
 def express(self):
-    self._fittness = 2
+    self._fitness = 2
 
 
 def evaluate(self, val):
-    self._fittness = val
+    self._fitness = val
 
 
 class TestIndividual(unittest.TestCase):
@@ -25,19 +25,19 @@ class TestIndividual(unittest.TestCase):
         self.plasm_0.random()
         self.plasm_0.update(0.1, 0)
         plasm_1 = self.plasm_0.copy().mutate()
-        self.idv_0 = Individual(0, 0, plasm=self.plasm_0)
-        self.idv_1 = Individual(0, 1, plasm=plasm_1)
+        self.idv_0 = Individual(plasm=self.plasm_0)
+        self.idv_1 = Individual(plasm=plasm_1)
 
     def test_init(self):
-        self.assertEqual(self.idv_0.gen_id, 0)
-        self.assertEqual(self.idv_0.idv_id, 0)
+        self.assertEqual(self.idv_0.gen_id, -1)
+        self.assertEqual(self.idv_0.idv_id, -1)
         self.idv_1.gen_id = 2
         self.idv_1.idv_id = 5
         self.assertEqual(self.idv_1.gen_id, 2)
         self.assertEqual(self.idv_1.idv_id, 5)
         with self.assertRaises(ValueError):
-            self.idv_0.fittness
-        self.assertIs(self.idv_0._fittness, None)
+            self.idv_0.fitness
+        self.assertIs(self.idv_0._fitness, None)
         self.assertFalse(self.idv_1.is_growup())
 
     def test_plasm(self):
@@ -64,23 +64,23 @@ class TestIndividual(unittest.TestCase):
             self.idv_0.express()
         Individual.express = express
         self.idv_1.express()
-        self.assertEqual(self.idv_1.fittness, 2)
+        self.assertEqual(self.idv_1.fitness, 2)
 
     def test_evaluate(self):
         with self.assertRaises(NotImplementedError):
             self.idv_0.evaluate()
         Individual.evaluate = evaluate
         self.idv_0.evaluate(4)
-        self.assertEqual(self.idv_0.fittness, 4)
+        self.assertEqual(self.idv_0.fitness, 4)
 
     def test_str_format(self):
         print('\n%s' % self.idv_0)
         print(self.idv_1)
 
-    def test_fittness(self):
+    def test_fitness(self):
         with self.assertRaises(ValueError):
-            self.idv_0.fittness
-        self.assertIs(self.idv_1._fittness, None)
+            self.idv_0.fitness
+        self.assertIs(self.idv_1._fitness, None)
 
     def test_sexual_reproduce(self):
         print(f'\nfather: {self.idv_0}')

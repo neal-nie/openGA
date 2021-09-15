@@ -14,19 +14,19 @@ logger = logging.getLogger('openGA')
 
 class Individual(object):
     """
-    individual carray chromosomes, express feature and show fittness.
+    individual carray chromosomes, express feature and show fitness.
     """
 
-    def __init__(self, gen_id: int, idv_id: int, plasm: Chromosome) -> Individual:
-        self._gen_id = gen_id
-        self._idv_id = idv_id
-        self._fittness = None
+    def __init__(self, plasm: Chromosome) -> Individual:
+        self._gen_id = -1
+        self._idv_id = -1
+        self._fitness = None
         self._plasm = plasm.copy()
         self._check = self._plasm.check
 
     def __str__(self) -> str:
-        return f"person({self._gen_id:d}, {self._idv_id:d}): {self._plasm}"
-    
+        return f"person({self._gen_id:d}, {self._idv_id:d}): [{self._fitness}] {self._plasm}"
+
     def __format__(self, format_spec: str) -> str:
         return str(self)
 
@@ -47,13 +47,13 @@ class Individual(object):
         self._idv_id = id
 
     @property
-    def fittness(self) -> Union[None, float]:
-        if self._fittness is None:
-            raise ValueError('fittness not available, need evaluate in prior.')
-        return self._fittness
+    def fitness(self) -> Union[None, float]:
+        if self._fitness is None:
+            raise ValueError('fitness not available, need evaluate in prior.')
+        return self._fitness
 
     def is_growup(self) -> bool:
-        return not self._fittness is None
+        return not self._fitness is None
 
     @property
     def plasm(self) -> Chromosome:
@@ -77,11 +77,12 @@ class Individual(object):
             'evaluate() of Individual need to implement by monkey patch')
 
     def copy(self) -> Individual:
-        twin = Individual(self._gen_id, self._idv_id,
-                          self._plasm)
+        clone = Individual(self._plasm)
         for i in range(self._plasm._gene_num):
-            twin._plasm.update(self._plasm.gene_values[i], i)
-        return twin
+            clone._plasm.update(self._plasm.gene_values[i], i)
+        clone.gen_id = self._gen_id
+        clone.idv_id = self._idv_id
+        return clone
 
     def sexual_reproduce(self, couple: Individual, p_mutation: float = 0.05) -> Tuple[Individual, Individual]:
         offspring_0 = self.copy()
