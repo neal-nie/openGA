@@ -29,11 +29,13 @@ logger.addHandler(console)
 from .chromosome import Chromosome
 from .individual import Individual
 from .population import Population
+from .genetic_algorithm import GeneticAlgorithm
 from .version import __version__
 
 __all__ = [
     "__version__",
     "Chromosome",
     "Individual",
-    "Population"
+    "Population",
+    "GeneticAlgorithm"
 ]

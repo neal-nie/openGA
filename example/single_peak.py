@@ -3,4 +3,5 @@
 example to search max in single peak problem
 """
 
-from openGA import Population, Individual, Chromosome
+from openGA import Individual, GeneticAlgorithm
+

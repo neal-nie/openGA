@@ -12,9 +12,9 @@ from .chromosome import Chromosome
 logger = logging.getLogger('openGA')
 
 
-class Ga(object):
+class GeneticAlgorithm(object):
     """
-    genetic algortihm
+    genetic algortihm framework
     """
 
     def __init__(self, ancient_info: Dict[str, float], capacity: int = 20):
