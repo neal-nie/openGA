@@ -154,7 +154,10 @@ class Population(object):
             self._next_gen.append(next_idv)
         return self._next_gen.copy()
 
-    def evolve(self, pool_size: int = None, tour_size: int = 2, cross_prob: float = 0.9) -> List[Individual]:
+    def evolve(self, pool_size: int = None, tour_size: int = 2, cross_prob: float = 0.9) -> Population:
         self.select(pool_size, tour_size)
         self.reproduce(cross_prob)
-        return self.eliminate().copy()
+        survivors = self.eliminate()
+        next_gen_id = self._gen_id + 1
+        next_population = Population(next_gen_id, survivors, self._capacity)
+        return next_population

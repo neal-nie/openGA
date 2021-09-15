@@ -136,7 +136,7 @@ class TestPopulation(unittest.TestCase):
         next_generation = self.people_test.evolve()
         del self.people_test
         print('next generation:')
-        for p in next_generation:
+        for p in next_generation.curr_gen:
             print(p)
 
 
