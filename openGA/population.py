@@ -29,6 +29,25 @@ class Population(object):
             self._curr_gen[i].gen_id = gen_id
             self._curr_gen[i].idv_id = i
 
+    def __str__(self) -> str:
+        rlt_str = f"population({self._size:d}/{self._capacity}):\n"
+        rlt_str += f"current generation @{self._gen_id:d}:\n"
+        for p in self._curr_gen:
+            rlt_str += f"{p}\n"
+        rlt_str += f"parents [{len(self._parents):d}]:\n"
+        for p in self._parents:
+            rlt_str += f"{p}\n"
+        rlt_str += f"children [{len(self._children):d}]:\n"
+        for p in self._children:
+            rlt_str += f"{p}\n"
+        rlt_str += f"next generation [{len(self._next_gen):d}]:\n"
+        for p in self._next_gen:
+            rlt_str += f"{p}\n"
+        return rlt_str
+
+    def __format__(self, format_spec: str) -> str:
+        return str(self)
+
     @property
     def gen_id(self):
         return self._gen_id

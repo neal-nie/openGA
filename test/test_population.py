@@ -61,6 +61,11 @@ class TestPopulation(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.people_0.next_gen
 
+    def test_str(self):
+        print(self.people_0)
+        print(self.people_1)
+        print(self.people_test)
+
     def test_evaluate(self):
         with self.assertRaises(NotImplementedError):
             Population.evaluate(self.people_1.curr_gen)
@@ -87,7 +92,7 @@ class TestPopulation(unittest.TestCase):
         print('selected parents:')
         for i in self.people_test.parents:
             print(i)
-
+        print(self.people_test)
         self.people_test.select(3)
         print('selected parenet:')
         for i in self.people_test.parents:
@@ -101,11 +106,12 @@ class TestPopulation(unittest.TestCase):
         for p in parent:
             print(p)
         children = self.people_test.reproduce()
+        print(self.people_test)
         print('children:')
         for c in children:
             print(c)
         self.assertTrue(0 < len(children) <= self.people_test.size())
-    
+
     def test_eliminate(self):
         print(f'\ncurrent generation:')
         for p in self.people_test.curr_gen:
@@ -124,7 +130,8 @@ class TestPopulation(unittest.TestCase):
         print('next generation:')
         for p in next_generation:
             print(p)
-        self.assertEqual(next_generation[0].gen_id, self.people_test.gen_id + 1)
+        self.assertEqual(
+            next_generation[0].gen_id, self.people_test.gen_id + 1)
         self.assertTrue(next_generation[0].is_growup())
 
     def test_evolve(self):
@@ -138,7 +145,6 @@ class TestPopulation(unittest.TestCase):
         print('next generation:')
         for p in next_generation.curr_gen:
             print(p)
-
 
 
 if __name__ == "__main__":
