@@ -73,9 +73,15 @@ class TestChromosome(unittest.TestCase):
     def test_random(self):
         origin_genes = self.plasm.gene_values
         print(f'\norigin chromosome: {self.plasm}')
-        self.plasm.random()
-        print(f'randomized chromosome: {self.plasm}')
+        mock = self.plasm.random()
+        print(f'randomized chromosome: {mock}')
+        self.assertFalse(np.all(origin_genes == mock.gene_values))
+        print(f'\norigin chromosome: {self.plasm}')
+        self.assertTrue(np.all(origin_genes == self.plasm.gene_values))
+        mock = self.plasm.random(inplace=True)
+        print(f'\ninplace origin chromosome: {self.plasm}')
         self.assertFalse(np.all(origin_genes == self.plasm.gene_values))
+        self.assertTrue(mock == self.plasm)
 
     def test_crossover_unmatch(self):
         self.plasm.check = True

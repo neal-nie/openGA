@@ -28,8 +28,7 @@ class TestPopulation(unittest.TestCase):
         chm = self.ancestor.plasm
         print('\nancestor: %s' % self.ancestor)
         for i in range(10):
-            chm.random()
-            p = Individual(chm)
+            p = Individual(chm.random())
             p._fitness = i * 2
             p_list.append(p)
         self.people_test = Population(3, p_list, capacity=10)

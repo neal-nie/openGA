@@ -111,11 +111,15 @@ class Chromosome(object):
                 return False
         return True
 
-    def random(self):
-        for i in range(self._gene_num):
+    def random(self, inplace=False) -> Chromosome:
+        mock = self.copy()
+        for i in range(mock._gene_num):
             val = np.random.uniform(GENE_MIN, GENE_MAX)
             val = round(val, GENE_PRECISION)
-            self.update(val, i)
+            mock.update(val, i)
+            if inplace:
+                self.update(val, i)
+        return mock
 
     def crossover(self, couple: Chromosome, eta: Union[int, float] = 20) -> Tuple[Chromosome, Chromosome]:
         if self._check:

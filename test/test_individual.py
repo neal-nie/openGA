@@ -22,7 +22,7 @@ class TestIndividual(unittest.TestCase):
     def setUp(self) -> None:
         self.gene_name = ['a', 'b', 'c', 'd']
         self.plasm_0 = Chromosome(self.gene_name, check=False)
-        self.plasm_0.random()
+        self.plasm_0.random(inplace=True)
         self.plasm_0.update(0.1, 0)
         plasm_1 = self.plasm_0.copy().mutate()
         self.idv_0 = Individual(plasm=self.plasm_0)
