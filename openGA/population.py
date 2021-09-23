@@ -134,7 +134,7 @@ class Population(object):
                 'invalid cross_prob. Must in [0,1], got %6.4f' % cross_prob)
         self._children = []
         n_parents = len(self._parents)
-        for i in range(n_parents):
+        for _ in range(n_parents):
             if np.random.uniform(0, 1) < cross_prob:
                 # select parents
                 p0_idx = np.random.randint(0, n_parents)
