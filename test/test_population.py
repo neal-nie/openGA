@@ -139,7 +139,10 @@ class TestPopulation(unittest.TestCase):
             print(p)
         Individual.express = express
         Individual.evaluate = evaluate
+        last_gen_id = self.people_test.gen_id
         next_generation = self.people_test.evolve()
+        curr_gen_id = next_generation.gen_id
+        self.assertEqual(last_gen_id + 1, curr_gen_id)
         del self.people_test
         print('next generation:')
         for p in next_generation.curr_gen:
