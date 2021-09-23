@@ -31,7 +31,7 @@ class Individual(object):
         return str(self)
 
     @property
-    def gen_id(self):
+    def gen_id(self) -> int:
         return self._gen_id
 
     @gen_id.setter
@@ -39,7 +39,7 @@ class Individual(object):
         self._gen_id = gen
 
     @property
-    def idv_id(self):
+    def idv_id(self) -> int:
         return self._idv_id
 
     @idv_id.setter

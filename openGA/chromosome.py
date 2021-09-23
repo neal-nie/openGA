@@ -76,11 +76,11 @@ class Chromosome(object):
             return False
         return True
 
-    def size(self):
+    def size(self) -> int:
         return self._gene_num
 
     @property
-    def check(self):
+    def check(self) -> bool:
         return self._check
 
     @check.setter
@@ -88,7 +88,7 @@ class Chromosome(object):
         self._check = active
 
     @property
-    def gene_values(self):
+    def gene_values(self) -> np.ndarray:
         return self._gene_values.copy()
 
     def update(self, value: float, index: int):

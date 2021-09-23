@@ -49,28 +49,28 @@ class Population(object):
         return str(self)
 
     @property
-    def gen_id(self):
+    def gen_id(self) -> int:
         return self._gen_id
 
     @property
-    def curr_gen(self):
+    def curr_gen(self) -> List[Individual]:
         return self._curr_gen.copy()
 
     @property
-    def parents(self):
+    def parents(self) -> List[Individual]:
         if not self._parents:
             raise ValueError('parents not avialable, need select() in prior.')
         return self._parents.copy()
 
     @property
-    def children(self):
+    def children(self) -> List[Individual]:
         if not self._children:
             raise ValueError(
                 'children not available, need reproduce() in prior.')
         return self._children.copy()
 
     @property
-    def next_gen(self):
+    def next_gen(self) -> List[Individual]:
         if not self._next_gen:
             raise ValueError(
                 'next generation not available, need elimate() in prior.')
@@ -83,7 +83,7 @@ class Population(object):
                 person.express()
                 person.evaluate()
 
-    def size(self):
+    def size(self) -> int:
         return self._size
 
     def append_newcomer(self, newcomer: Individual):
