@@ -8,6 +8,7 @@ import logging
 import numpy as np
 import pandas as pd
 from typing import List
+from copy import deepcopy
 from .individual import Individual
 
 logger = logging.getLogger('openGA')
@@ -22,7 +23,7 @@ class Population(object):
         self._capacity = capacity
         self._gen_id = gen_id
         self._size = len(curr_gen)
-        self._curr_gen = curr_gen.copy()
+        self._curr_gen = deepcopy(curr_gen)
         self._parents = []
         self._children = []
         self._next_gen = []
@@ -30,7 +31,7 @@ class Population(object):
             self._curr_gen[i].gen_id = gen_id
             self._curr_gen[i].idv_id = i
 
-    def to_df(self, default_fit:float=np.nan) -> pd.DataFrame:
+    def to_df(self, default_fit: float = np.nan) -> pd.DataFrame:
         l = []
         for p in self._curr_gen:
             l.append(p.to_dict(default_fit=default_fit))
@@ -175,7 +176,7 @@ class Population(object):
         # get the top size
         self._next_gen = []
         for i in range(self._capacity):
-            next_idv = self._combine[joint_sort[i][1]]
+            next_idv = deepcopy(self._combine[joint_sort[i][1]])
             next_idv.idv_id = i
             next_idv.gen_id = self._gen_id + 1
             self._next_gen.append(next_idv)

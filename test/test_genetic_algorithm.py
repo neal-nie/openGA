@@ -31,7 +31,7 @@ class TestGeneticAlgorithm(unittest.TestCase):
         print(f'\nga record is:')
         print(rec_df)
 
-    @unittest.skip('debug')
+    # @unittest.skip('debug')
     def test_init(self):
         self.assertFalse(self.ga._patched)
         self.assertFalse(self.ga.patched)
