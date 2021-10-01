@@ -4,6 +4,7 @@ genetic algorithm entry
 # Copyright (c) 2015-2021 Neal Nie. All rights reserved.
 
 import logging
+import pandas as pd
 from typing import Dict, Union, Callable
 from .population import Population
 from .individual import Individual
@@ -27,6 +28,7 @@ class GeneticAlgorithm(object):
             ancestors.append(Individual(ancient_plasm.random()))
         self._people = Population(0, ancestors, capacity)
         self._patched = False
+        self._record = pd.DataFrame()
 
     @property
     def people(self) -> Population:
@@ -35,6 +37,10 @@ class GeneticAlgorithm(object):
     @property
     def patched(self) -> bool:
         return self._patched
+
+    @property
+    def record(self) -> pd.DataFrame:
+        return self._record
 
     def add_patch(self, fit_funct: Callable[[], float]):
         # add monkey patch
@@ -55,7 +61,9 @@ class GeneticAlgorithm(object):
         # population evolution
         for _ in range(gen_max):
             new_people = self._people.evolve(pool_size, tour_size, p_crossover)
+            self._record = self._record.append(self._people.to_df(), ignore_index=True)
             self._people = new_people
+        self._record = self._record.append(self._people.to_df(), ignore_index=True)
 
     def result(self) -> Individual:
         return self._people.curr_gen[0]

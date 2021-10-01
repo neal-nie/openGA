@@ -60,6 +60,14 @@ class TestPopulation(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.people_0.next_gen
 
+    def test_to_df(self):
+        df = self.people_test.to_df()
+        print(f'\nCurrent Generation Info:')
+        print(df)
+        print(f'people is {self.people_test}')
+        df = self.people_1.to_df()
+        print(df)
+
     def test_str(self):
         print(self.people_0)
         print(self.people_1)

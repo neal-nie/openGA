@@ -4,6 +4,7 @@ test case for genetic algorithm
 # Copyright (c) 2015-2021 Neal Nie. All rights reserved.
 
 import unittest
+from unittest.case import skip
 import numpy as np
 
 from openGA import GeneticAlgorithm
@@ -25,6 +26,12 @@ class TestGeneticAlgorithm(unittest.TestCase):
         }
         self.ga = GeneticAlgorithm(base_gene)
 
+    def tearDown(self) -> None:
+        rec_df = self.ga.record
+        print(f'\nga record is:')
+        print(rec_df)
+
+    @unittest.skip('debug')
     def test_init(self):
         self.assertFalse(self.ga._patched)
         self.assertFalse(self.ga.patched)

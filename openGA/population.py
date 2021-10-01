@@ -6,6 +6,7 @@ population for genetic algorithm
 from __future__ import annotations
 import logging
 import numpy as np
+import pandas as pd
 from typing import List
 from .individual import Individual
 
@@ -28,6 +29,13 @@ class Population(object):
         for i in range(self._size):
             self._curr_gen[i].gen_id = gen_id
             self._curr_gen[i].idv_id = i
+
+    def to_df(self, default_fit:float=np.nan) -> pd.DataFrame:
+        l = []
+        for p in self._curr_gen:
+            l.append(p.to_dict(default_fit=default_fit))
+        rlt = pd.DataFrame(l)
+        return rlt
 
     def __str__(self) -> str:
         rlt_str = f"population({self._size:d}/{self._capacity}):\n"

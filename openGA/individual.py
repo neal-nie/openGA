@@ -6,7 +6,7 @@ individual for genetic algorithm
 from __future__ import annotations
 import logging
 import numpy as np
-from typing import List, Tuple, Union
+from typing import Dict, List, Tuple, Union
 from .chromosome import Chromosome
 
 logger = logging.getLogger('openGA')
@@ -23,6 +23,14 @@ class Individual(object):
         self._fitness = None
         self._plasm = plasm.copy()
         self._check = self._plasm.check
+
+    def to_dict(self, default_fit:float=np.nan) -> Dict[str, float]:
+        rlt = {}
+        rlt['gen_id'] = self._gen_id
+        rlt['idv_id'] = self._idv_id
+        rlt['fitness'] = default_fit if self._fitness is None else self._fitness
+        rlt.update(self._plasm.to_dict())
+        return rlt
 
     def __str__(self) -> str:
         return f"person({self._gen_id:d}, {self._idv_id:d}): [{self._fitness}] {self._plasm}"

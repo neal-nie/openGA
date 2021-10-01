@@ -40,6 +40,11 @@ class TestIndividual(unittest.TestCase):
         self.assertIs(self.idv_0._fitness, None)
         self.assertFalse(self.idv_1.is_growup())
 
+    def test_to_dict(self):
+        d = self.idv_0.to_dict()
+        self.assertTrue(d['fitness'] is np.nan)
+        print(f'\ndict is {d}')
+
     def test_plasm(self):
         plasm = self.idv_0.plasm
         self.assertListEqual(plasm._gene_names, self.gene_name)
@@ -72,6 +77,7 @@ class TestIndividual(unittest.TestCase):
         Individual.evaluate = evaluate
         self.idv_0.evaluate(4)
         self.assertEqual(self.idv_0.fitness, 4)
+        self.assertFalse(self.idv_0.to_dict()['fitness'] is np.nan)
 
     def test_str_format(self):
         print('\n%s' % self.idv_0)
