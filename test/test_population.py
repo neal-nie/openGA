@@ -89,6 +89,17 @@ class TestPopulation(unittest.TestCase):
             self.people_1.curr_gen[1].gen_id, self.people_1.gen_id)
         self.assertEqual(self.people_1.curr_gen[1].idv_id, 1)
 
+    def test_append_newcomer(self):
+        immigrant = Individual(Chromosome(['a','x']))
+        with self.assertRaises(ValueError):
+            self.people_1.append_newcomer(immigrant)
+        self.people_0.append_newcomer(immigrant)
+        immigrant = Individual(Chromosome(['a','b','c','x']))
+        self.assertEqual(self.people_0.size(), 1) 
+        with self.assertRaises(ValueError):
+            self.people_0.append_newcomer(immigrant)
+        self.assertEqual(self.people_0.size(), 1)
+
     # @unittest.skip('ignore this case')
     def test_select(self):
         self.assertEqual(self.people_test.size(), 10)

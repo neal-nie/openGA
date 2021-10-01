@@ -99,10 +99,13 @@ class Population(object):
         person = newcomer.copy()
         person.gen_id = self._gen_id
         person.idv_id = self._size
+        if self._curr_gen:
+            if not person.plasm.is_couple(self._curr_gen[0].plasm):
+                raise ValueError('invalid newcomer.')
         self._curr_gen.append(person)
         self._size += 1
 
-    def append_newborn(self, newborn: Individual):
+    def _append_newborn(self, newborn: Individual):
         person = newborn.copy()
         person.gen_id = self._gen_id
         person.idv_id = self._size
@@ -153,14 +156,14 @@ class Population(object):
                 # sexual produce
                 c0, c1 = self._parents[int(p0_idx)].sexual_reproduce(
                     self._parents[int(p1_idx)], p_mutation=0)
-                self.append_newborn(c0)
-                self.append_newborn(c1)
+                self._append_newborn(c0)
+                self._append_newborn(c1)
             else:
                 # asexual produce mutation
                 p_idx = np.random.randint(0, n_parents)
                 c = self._parents[int(p_idx)].asexual_reproduce(p_mutation=1)
                 c.idv_id = len(self._children) + self._size
-                self.append_newborn(c)
+                self._append_newborn(c)
         # evaluate children
         self.evaluate(self._children)
         return self._children.copy()
