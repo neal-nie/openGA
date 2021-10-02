@@ -27,6 +27,12 @@ class TestIndividual(unittest.TestCase):
         plasm_1 = self.plasm_0.copy().mutate()
         self.idv_0 = Individual(plasm=self.plasm_0)
         self.idv_1 = Individual(plasm=plasm_1)
+        self.raw_express = Individual.express
+        self.raw_evaluate = Individual.evaluate
+
+    def tearDown(self) -> None:
+        Individual.express = self.raw_express
+        Individual.evaluate = self.raw_evaluate
 
     def test_init(self):
         self.assertEqual(self.idv_0.gen_id, -1)

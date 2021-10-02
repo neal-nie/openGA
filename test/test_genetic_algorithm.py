@@ -25,11 +25,15 @@ class TestGeneticAlgorithm(unittest.TestCase):
             'd': 0.3
         }
         self.ga = GeneticAlgorithm(base_gene)
+        self.raw_express = Individual.express
+        self.raw_evaluate = Individual.evaluate
 
     def tearDown(self) -> None:
         rec_df = self.ga.record
         print(f'\nga record is:')
         print(rec_df)
+        Individual.express = self.raw_express
+        Individual.evaluate = self.raw_evaluate
 
     # @unittest.skip('debug')
     def test_init(self):
