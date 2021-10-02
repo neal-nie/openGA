@@ -1,12 +1,11 @@
-#!/usr/bin/env python
+"""
+function to execute all tests found in the test directory
+"""
+# Copyright (c) 2015-2021 Neal Nie. All rights reserved.
 
-"""
-Main test function to execute all tests found in the current directory
-"""
 from pathlib import Path
 import sys
 import unittest
-
 import xmlrunner
 
 
