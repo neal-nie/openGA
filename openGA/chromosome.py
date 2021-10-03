@@ -7,7 +7,7 @@ from __future__ import annotations
 import logging
 import numpy as np
 from typing import Dict, Union, List, Tuple
-from .utils import limit, GENE_MIN, GENE_MAX
+from .utils import limit, uniform_open, GENE_MIN, GENE_MAX
 
 logger = logging.getLogger('openGA')
 
@@ -33,12 +33,12 @@ def dist_mutation(r: float, eta: Union[int, float] = 20) -> float:
 
 
 def get_crossover_coef(eta: Union[int, float] = 20) -> float:
-    u = np.random.uniform()
+    u = uniform_open()
     return dist_crossover(u, eta)
 
 
 def get_mutation_coef(eta: Union[int, float] = 20) -> float:
-    u = np.random.uniform()
+    u = uniform_open()
     return dist_mutation(u, eta)
 
 

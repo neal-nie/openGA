@@ -5,7 +5,6 @@ test case for chromosome
 
 import unittest
 import numpy as np
-import matplotlib.pyplot as plt
 
 from openGA import Chromosome
 from openGA.chromosome import get_crossover_coef, get_mutation_coef, dist_crossover, dist_mutation
@@ -122,17 +121,6 @@ class TestChromosome(unittest.TestCase):
         for _ in range(20):
             theta = get_mutation_coef()
             self.assertTrue(-1 <= theta <= 1, f'eta is {theta:6.4f}')
-
-    @unittest.skipIf(__name__ != "__main__", 'ignore plot as called by others')
-    def test_dist(self):
-        x = np.arange(0, 1.01, 0.01)
-        coef_cross = np.array([dist_crossover(i) for i in x])
-        coef_mutation = np.array([dist_mutation(i) for i in x])
-        plt.plot(x, coef_cross, '-k', label=r'$\beta_{cross}$')
-        plt.plot(x, coef_mutation, '-r', label=r'$\theta_{mutation}$')
-        plt.legend()
-        plt.grid()
-        plt.show()
 
 
 if __name__ == "__main__":
