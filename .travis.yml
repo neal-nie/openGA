@@ -1,0 +1,14 @@
+language: python
+python:
+  - "3.9"
+# command to install dependencies
+install:
+  - pip install . -r test/requirements.txt 
+# command to run tests
+script:
+  - set -e
+  - python --version
+  - python -m pytest -vv --color=yes --disable-pytest-warnings --cov-report xml:coverage.xml --cov=openGA/ test/
+
+after_success:
+  - coveralls
