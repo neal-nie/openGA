@@ -85,7 +85,7 @@ class Individual(object):
         """get fitness value of `this` individual.
 
         Raises:
-            ValueError: raise ValueError with message of `fitness not available, need evaluate in prior.` when individual not grow-up.
+            ValueError: error message of `fitness not available, need evaluate in prior.` when individual not grow-up.
 
         Returns:
             float: fitness value.

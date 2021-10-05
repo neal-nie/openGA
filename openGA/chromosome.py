@@ -126,9 +126,6 @@ class Chromosome(object):
 
     def size(self) -> int:
         """get number of gene in chromosome.
-
-        Returns:
-            int: gene number.
         """
         return self._gene_num
 
@@ -214,7 +211,7 @@ class Chromosome(object):
             eta (Union[int, float], optional): cross-over coefficiency distribution index. Defaults to 20.
 
         Raises:
-            ValueError: if couple check failed, raise ValueError with message of `couple unmatch, can not crossover`.
+            ValueError: error message of `couple unmatch, can not crossover`, if couple check failed.
 
         Returns:
             Tuple[Chromosome, Chromosome]: offspring chromosomes.
