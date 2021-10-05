@@ -10,7 +10,17 @@ GENE_MAX = 1
 GENE_MIN = 0
 
 
-def limit(x, up=GENE_MAX, low=GENE_MIN) -> Union[int, float]:
+def limit(x: Union[int, float], up: Union[int, float] = GENE_MAX, low: Union[int, float] = GENE_MIN) -> Union[int, float]:
+    """limit gene value in the bounday(in [low, max]).
+
+    Args:
+        x (Union[int, float]): raw gene value.
+        up (Union[int, float], optional): upper boundary of gene value. Defaults to GENE_MAX.
+        low (Union[int, float], optional): lower boundary of gene valu. Defaults to GENE_MIN.
+
+    Returns:
+        Union[int, float]: limited gene value.
+    """
     return max(low, min(x, up))
 
 

@@ -21,6 +21,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r test/requirements.txt 
+          pip install -r doc/requirements.txt pytest pytest-cov coveralls
           
       - name: Running tests
         run: |

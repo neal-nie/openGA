@@ -55,7 +55,7 @@ class TestGeneticAlgorithm(unittest.TestCase):
         print("evolution result:")
         print(f"{self.ga.result()}")
 
-    def test_append_ancestor(self):
+    def test_append(self):
         origin_size = self.ga.people.size()
         base_gene = {
             'a': 0.8,
@@ -63,7 +63,7 @@ class TestGeneticAlgorithm(unittest.TestCase):
             'c': 0.2,
             'd': 0.7
         }
-        self.ga.append_ancestor(base_gene)
+        self.ga.append(base_gene)
         new_size = self.ga.people.size()
         self.assertEqual(new_size, origin_size + 1)
         self.assertDictEqual(

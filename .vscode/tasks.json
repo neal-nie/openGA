@@ -65,7 +65,6 @@
                 "Export-XML"
             ],
             "dependsOrder": "sequence",
-            "command": "echo Hello",
             "problemMatcher": []
         },
         {
