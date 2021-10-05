@@ -24,7 +24,7 @@
     Class Individual {
         int gen_id
         int idv_id
-        float fittness
+        float fitness
         Chromosome plasm
         ==**patch**==
         --public--
@@ -51,7 +51,7 @@
         reproduce() -> children
         elmiate() -> next generation
         --private--
-        evaluate() -> update fittness
+        evaluate() -> update fitness
         <s>compete() -> return winner idv_id</s>
         <s>combine() -> </s>
     }

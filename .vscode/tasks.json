@@ -58,15 +58,41 @@
             "problemMatcher": []
         },
         {
-            "label": "Clean-Bash",
-            "detail": "clean legacy build generated files",
+            "label": "Re-Export-XML",
+            "detail": "clean legacy and generate new xml result of unit tests",
+            "dependsOn": [
+                "Clean-XML",
+                "Export-XML"
+            ],
+            "dependsOrder": "sequence",
+            "command": "echo Hello",
+            "problemMatcher": []
+        },
+        {
+            "label": "Export-XML",
+            "detail": "generate test case result in xml",
+            "type": "process",
+            "command": "python",
+            "args": [
+                "${workspaceFolder}\\test\\run_all.py"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "PYTHONPATH": "${workspaceFolder};${env:PYTHONPATH}"
+                }
+            },
+            "group": "test",
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean-XML",
+            "detail": "clean legacy generated xml files",
             "type": "shell",
             "command": "rm",
             "args": [
                 "-rf",
-                "*egg-info",
-                "build",
-                "*.avi"
+                "test-reports",
             ],
             "options": {
                 "cwd": "${workspaceFolder}",
@@ -87,7 +113,7 @@
             "label": "Re-Build",
             "detail": "clean legacy build and build new package",
             "dependsOn": [
-                "Clean-Cmd",
+                "Clean-Build",
                 "Build"
             ],
             "dependsOrder": "sequence",
@@ -111,7 +137,7 @@
             "problemMatcher": []
         },
         {
-            "label": "Clean-Cmd",
+            "label": "Clean-Build",
             "detail": "clean legacy build generated files",
             "type": "shell",
             "command": ".script\\remove.bat",
