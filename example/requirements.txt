@@ -1,0 +1,8 @@
+numpy>=1.19.1
+pandas
+ipykernel
+ipython
+jupyter-client
+jupyter-core
+matplotlib
+matplotlib-inline
