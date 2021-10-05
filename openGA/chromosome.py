@@ -15,6 +15,15 @@ GENE_PRECISION = 4
 
 
 def dist_crossover(r: float, eta: Union[int, float] = 20) -> float:
+    """distribution of cross-over coefficiency $\beta$. mean = 1.
+
+    Args:
+        r (float): random factor in (0, 1).
+        eta (Union[int, float], optional): distribution index. Defaults to 20.
+
+    Returns:
+        float: cross-over factor $\beta$
+    """
     k = 1 / (eta + 1)
     if r <= 0.5:
         rlt = (2 * r) ** k
@@ -24,6 +33,15 @@ def dist_crossover(r: float, eta: Union[int, float] = 20) -> float:
 
 
 def dist_mutation(r: float, eta: Union[int, float] = 20) -> float:
+    """distribution of mutation coefficiency $\theta$. mean = 0.
+
+    Args:
+        r (float): random factor in (0, 1).
+        eta (Union[int, float], optional): distribution index. Defaults to 20.
+
+    Returns:
+        float: mutation factor $\theta$
+    """
     k = 1 / (eta + 1)
     if r < 0.5:
         rlt = (2 * r) ** k - 1
@@ -33,27 +51,57 @@ def dist_mutation(r: float, eta: Union[int, float] = 20) -> float:
 
 
 def get_crossover_coef(eta: Union[int, float] = 20) -> float:
+    """calc. cross-over coefficiency $\beta$.
+
+    Args:
+        eta (Union[int, float], optional): distribution index. Defaults to 20.
+
+    Returns:
+        float: cross-over coefficiency.
+    """
     u = uniform_open()
     return dist_crossover(u, eta)
 
 
 def get_mutation_coef(eta: Union[int, float] = 20) -> float:
+    """calc. mutation coefficiency $\theta$.
+
+    Args:
+        eta (Union[int, float], optional): distribution index. Defaults to 20.
+
+    Returns:
+        float: mutation coefficiency.
+    """
     u = uniform_open()
     return dist_mutation(u, eta)
 
 
 class Chromosome(object):
     """
-    create chromosome with gene in [0,1]
+    chromosome with real-number(in [0,1]) encoded genes. 
     """
 
     def __init__(self, gene_names: List[str], check: bool = True) -> Chromosome:
+        """create chromosome.
+
+        Args:
+            gene_names (List[str]): list of gene name.
+            check (bool, optional): True, check genes couple or not in genetic operation. False, on the contrary. Defaults to True.
+
+        Returns:
+            Chromosome: new chromosome object.
+        """
         self._check = check
         self._gene_num = len(gene_names)
         self._gene_names = gene_names.copy()
         self._gene_values = np.zeros(self._gene_num)
 
     def to_dict(self) -> Dict[str, float]:
+        """convert chromosome into dict with gene name as key and gene value as dict value.
+
+        Returns:
+            Dict[str, float]: chromosome in dict format.
+        """
         rlt = {}
         for i in range(self._gene_num):
             rlt[self._gene_names[i]] = self._gene_values[i]
@@ -77,10 +125,20 @@ class Chromosome(object):
         return True
 
     def size(self) -> int:
+        """get number of gene in chromosome.
+
+        Returns:
+            int: gene number.
+        """
         return self._gene_num
 
     @property
     def check(self) -> bool:
+        """check flag of chromosome. 
+
+        Returns:
+            bool: True, check couple or not during genetic operation. False, on the contrary.
+        """
         return self._check
 
     @check.setter
@@ -89,9 +147,20 @@ class Chromosome(object):
 
     @property
     def gene_values(self) -> np.ndarray:
+        """get a deep copy of gene value in array.
+
+        Returns:
+            np.ndarray: gene value array.
+        """
         return self._gene_values.copy()
 
     def update(self, value: float, index: int):
+        """update gene value at specific index.
+
+        Args:
+            value (float): gene value in [0, 1]
+            index (int): index gene, started from ZERO.
+        """
         if not GENE_MIN <= value <= GENE_MAX and self._check:
             value_set = limit(value)
             logger.warning(
@@ -101,6 +170,14 @@ class Chromosome(object):
         self._gene_values[index] = round(value_set, GENE_PRECISION)
 
     def is_couple(self, couple: Chromosome) -> bool:
+        """check other chromosome is couple or not.
+
+        Args:
+            couple (Chromosome): the other chromosome.
+
+        Returns:
+            bool: True, able to generate offspring. False, on the contrary.
+        """
         if self._gene_num != couple._gene_num:
             logger.info('Not couple for unbalance gene number')
             return False
@@ -112,6 +189,14 @@ class Chromosome(object):
         return True
 
     def random(self, inplace=False) -> Chromosome:
+        """randomize gene value of chromosome.
+
+        Args:
+            inplace (bool, optional): True, `this` chromosome will be randomized. False, `this` one stay the same. Defaults to False.
+
+        Returns:
+            Chromosome: randomized chromosome object.
+        """
         mock = self.copy()
         for i in range(mock._gene_num):
             val = np.random.uniform(GENE_MIN, GENE_MAX)
@@ -122,6 +207,18 @@ class Chromosome(object):
         return mock
 
     def crossover(self, couple: Chromosome, eta: Union[int, float] = 20) -> Tuple[Chromosome, Chromosome]:
+        """generate offspring with cross-over operation.
+
+        Args:
+            couple (Chromosome): couple chromosome.
+            eta (Union[int, float], optional): cross-over coefficiency distribution index. Defaults to 20.
+
+        Raises:
+            ValueError: if couple check failed, raise ValueError with message of `couple unmatch, can not crossover`.
+
+        Returns:
+            Tuple[Chromosome, Chromosome]: offspring chromosomes.
+        """
         if self._check:
             if not self.is_couple(couple):
                 raise ValueError('couple unmatch, can not crossover')
@@ -140,6 +237,14 @@ class Chromosome(object):
         return offspring_0, offspring_1
 
     def mutate(self, eta: Union[int, float] = 20) -> Chromosome:
+        """generate offspring with mutation operation.
+
+        Args:
+            eta (Union[int, float], optional): mutation coefficiency distribution index. Defaults to 20.
+
+        Returns:
+            Chromosome: offspring chromosome.
+        """
         offspring = Chromosome(self._gene_names)
         for i in range(self._gene_num):
             p_gene_val = self._gene_values[i]
@@ -149,6 +254,11 @@ class Chromosome(object):
         return offspring
 
     def copy(self) -> Chromosome:
+        """create deep copy of `this` chromosome.
+
+        Returns:
+            Chromosome: cloned chromosome.
+        """
         twin = Chromosome(self._gene_names, self._check)
         for i in range(self._gene_num):
             twin.update(self._gene_values[i], i)
