@@ -4,3 +4,4 @@ numpydoc
 sphinx
 sphinx-argparse
 sphinx-rtd-theme
+PyYAML
