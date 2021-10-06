@@ -1,8 +1,8 @@
 name: PyPi-Publish
 
 on:
-  push:
-    if: startsWith(github.ref, 'refs/tags/v')
+  release:
+    type: [released]
 
 
 jobs:
