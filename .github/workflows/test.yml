@@ -1,4 +1,4 @@
-name: openGA package
+name: openGA test
 
 on: [push]
 
