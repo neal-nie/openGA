@@ -4,6 +4,23 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Sphinx-Cfg",
+            "detail": "create base configuration for sphinx",
+            "type": "shell",
+            "command": "sphinx-quickstart.exe",
+            "args": [
+                "-q",
+                "-p${workspaceFolderBasename}",
+                "-aNealNie",
+                "-r1.0.0"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}\\doc"
+            },
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
             "label": "Unit-Test",
             "detail": "do unit test for current file",
             "type": "process",
