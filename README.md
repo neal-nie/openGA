@@ -19,4 +19,4 @@ open source genetic algorithm framework.
 
 - [x] codacy
 - [ ] read the docs
-- [ ] pypi
+- [x] pypi
