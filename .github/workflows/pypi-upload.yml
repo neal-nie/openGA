@@ -2,8 +2,8 @@ name: PyPi-Publish
 
 on:
   push:
-    tag: 
-      - 'v**'
+    tags: 
+      - '**'
 
 
 jobs:
