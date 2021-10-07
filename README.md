@@ -20,8 +20,9 @@ The main goals for this library are:
 ## Usage
 
 - demo problem
-Seach optimal x-y combination to get maximal response of objective function.
-Surface plot of object function:
+    Seach optimal x-y combination to get maximal response of objective function.
+    Surface plot of object function:
+    ![object_function_surface](https://raw.githubusercontent.com/neal-nie/openGA/master/assets/object_function_surface.png)
 
 - theoretical solution
 
@@ -39,6 +40,7 @@ Surface plot of object function:
 
 - *openGA* searching process
     Evolve 15 generations with 20 individuals in each iteration.
+    ![evolution_process](https://raw.githubusercontent.com/neal-nie/openGA/master/assets/evolution_process.png)
 
 Check the ***examples*** folder for extended usage demo.
 
