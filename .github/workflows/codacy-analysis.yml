@@ -9,7 +9,7 @@
 name: Codacy Security Scan
 
 on:
-  [push]
+  [push, pull_request]
 
 jobs:
   codacy-security-scan:
