@@ -1,8 +1,9 @@
 name: PyPi-Publish
 
 on:
-  release:
-    type: [released]
+  push:
+    tags: 
+      - '**'
 
 
 jobs:
