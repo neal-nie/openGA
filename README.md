@@ -2,7 +2,7 @@
 
 ![Test](https://github.com/neal-nie/openGA/actions/workflows/test.yml/badge.svg?branch=master) ![Codacy](https://github.com/neal-nie/openGA/actions/workflows/codacy-analysis.yml/badge.svg?branch=master) ![Publish](https://github.com/neal-nie/openGA/actions/workflows/pypi-upload.yml/badge.svg?branch=v0.2.0)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/704a0911fb254509b28fae6d9c750533)](https://app.codacy.com/gh/neal-nie/openGA?utm_source=github.com&utm_medium=referral&utm_content=neal-nie/openGA&utm_campaign=Badge_Grade_Settings) [![codecov](https://codecov.io/gh/neal-nie/openGA/branch/master/graph/badge.svg?token=9WJ5PONFKK)](https://codecov.io/gh/neal-nie/openGA)
-[![PyPI version](https://badge.fury.io/py/openGA.svg)](https://pypi.python.org/py/openGA) [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
+[![PyPI version](https://badge.fury.io/py/openGA.svg)](https://pypi.org/project/openGA/) [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
 
 ## Overview
 
@@ -70,9 +70,9 @@ pip install openGA
 
 Please have a look over the [contributing guidelines](CONTRIBUTING.md).
 
-## features for v1.0.0
+## Features for v1.0.0
 
-### algorithm
+### Algorithm
 
 - [x] SOGA
 - [ ] NSGA

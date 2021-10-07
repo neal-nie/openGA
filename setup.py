@@ -1,5 +1,5 @@
 """
-openGA
+openGA package publish configuration
 """
 # Copyright (c) 2015-2021 Neal Nie. All rights reserved.
 
@@ -65,7 +65,7 @@ setup(
         "Programming Language :: Python :: 3.9",
     ],
     # What does your project relate to?
-    keywords="calibration adas automatic",
+    keywords="genetic-algorithm optimization trade-off AI",
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
     packages=find_packages(include=("openGA*",)),
